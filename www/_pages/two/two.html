@@ -1,0 +1,274 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Two</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "rocket.png", "next.png", "big.png", "small.png", "orangeP.png", "redP.png", "brownP.png", "purpleP.png", "ringP.png"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+        
+		// Remove borderBottom
+//        physics.remove(physics.borderBottom);
+//         physics.remove(physics.borderTop);
+
+        
+        
+        var rightBarW = 100;
+        var rightBarH = 500;    
+        
+        var topBarW = 650;
+        var topBarH = 100; 
+        
+        var bottomBarW = 720;
+        var bottomBarH = 100;  
+            
+        //rocket container
+        var rocketW = 145;
+		var rocketH = 300;
+
+        
+        
+        
+    
+        
+        var rightBarBody = physics.makeRectangle(rightBarW, rightBarH, false);
+        rightBarBody.x = 210;
+	    rightBarBody.y = 410;
+//        bottomBarBody.rotation = -35;
+        
+
+        
+        var topBarBody = physics.makeRectangle(topBarW, topBarH, false);
+        topBarBody.x = 670;
+	    topBarBody.y = 170;
+        topBarBody.rotation=-17;
+        
+        var bottomBarBody = physics.makeRectangle(bottomBarW, bottomBarH, false);
+        bottomBarBody.x = 670;
+	    bottomBarBody.y = 432;
+        bottomBarBody.rotation=-17;
+
+        
+        var rocketBody = physics.makeRectangle(rocketW, rocketH, true, .2);
+        rocketBody.x = 440;
+        rocketBody.y = 350;
+//        rocketBody.rotation = 35;
+        physics.drag([rocketBody]);
+        
+        
+          
+        
+        var rightBar = new zim.Rectangle(rightBarW, rightBarH, "white");
+		rightBar.centerReg(stage);
+        rightBar.alpha=0;
+        
+        
+        var topBar = new zim.Rectangle(topBarW, topBarH, "white");
+		topBar.centerReg(stage);
+        topBar.alpha=0;
+        
+        var bottomBar = new zim.Rectangle(bottomBarW, bottomBarH, "white");
+		bottomBar.centerReg(stage);
+        bottomBar.alpha=0;
+        
+        
+        
+
+        
+//        var rocket = new zim.Rectangle(rocketW, rocketH, "yellow");
+//		rocket.centerReg(stage);
+//        rocket.alpha=1;
+//        rocket.cursor = "pointer";
+        
+        var rocket = frame.asset("rocket.png");
+        rocket.centerReg(stage);
+        rocket.cursor = "pointer";
+        
+   
+//    
+//        var rocket = frame.asset("rocket.png");
+//        rocket.centerReg(stage);
+            
+        //add man to physics
+        
+        physics.addMap(rightBarBody, rightBar);
+        physics.addMap(topBarBody, topBar);
+        physics.addMap(bottomBarBody, bottomBar);
+        physics.addMap(rocketBody, rocket);
+
+    
+        //can click on a skier to move them
+	        
+		
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+//	  
+        var rocketFire=frame.asset("rocket_fire.png");
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"She was now in the Milky Way Galaxy. She saw    big      planets, small planets and ones with rings too!",
+           size:21,
+           lineWidth:760,
+            lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+
+        
+        var big = frame.asset("big.png");
+        big.centerReg(stage);
+        big.x=644;
+        big.y=645;
+        
+        var small = frame.asset("small.png");
+        small.centerReg(stage);
+        small.x=795;
+        small.y=645;
+    
+        
+        var orangeP=frame.asset("orangeP.png");
+        orangeP.centerReg(stage);
+        orangeP.x=160;
+        orangeP.y=128;
+        orangeP.on("pressmove", function(){
+           orangeP.animate({
+            obj:{rotation:- 40},
+               loop:true,
+               loopCount:2.5,
+               rewind:true
+        });
+        })
+        
+        var redP=frame.asset("redP.png");
+        redP.centerReg(stage);
+        redP.x=485;
+        redP.y=138;
+        redP.on("pressmove", function(){
+           redP.animate({
+            obj:{rotation:- 50},
+               loop:true,
+               loopCount:2,
+               rewind:true
+        });
+        })
+        
+        var brownP=frame.asset("brownP.png");
+        brownP.centerReg(stage);
+        brownP.x=775;
+        brownP.y=60;
+        brownP.on("pressmove", function(){
+           brownP.animate({
+               obj:{rotation:- 60},
+               loop:true,
+               loopCount:2,
+               rewind:true
+        });
+        })
+        
+        var purpleP=frame.asset("purpleP.png");
+        purpleP.centerReg(stage);
+        purpleP.x=160;
+        purpleP.y=490;
+        purpleP.on("pressmove", function(){
+           purpleP.animate({
+               obj:{rotation:- 120},
+               loop:true,
+               loopCount:3,
+               rewind:true
+        });
+        })
+
+        var ringP=frame.asset("ringP.png");
+        ringP.centerReg(stage);
+        ringP.x=800;
+        ringP.y=475;
+        ringP.on("pressmove", function(){
+           ringP.animate({
+               obj:{rotation:30},
+               loop:true,
+               loopCount:3,
+               rewind:true
+        });
+        })
+
+        
+        
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../three/three.html");});
+        
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../one/one.html");});
+        
+        
+        
+       
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

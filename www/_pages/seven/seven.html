@@ -1,0 +1,126 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Seven</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "hope.png", "hope.mp3"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+       
+       
+       
+        
+        
+        
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+	  
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"“Don’t worry dear, we have a map you can use to find your way to Planet Mars. You’ll be there in no time,” Mrs. Hope assured.",
+            size:21,
+           lineWidth:760,
+           lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+        
+        
+        var hope = frame.asset("hope.png");
+        stage.addChild(hope);
+        hope.centerReg(stage);
+        hope.x=520;
+        hope.y=350;
+        hope.alpha=.3;
+        
+        
+        
+        hope.on("click", function(){
+            frame.asset("hope.mp3").play();
+            hope.animate({
+            obj:{alpha:1},
+            time:3000,
+            rewind:true,
+//            loop:true,
+//            loopCount:5
+               });
+            })
+
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../six/six.html");});
+        
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../eight/eight.html");});
+        
+        
+
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

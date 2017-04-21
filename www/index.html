@@ -1,1 +1,302 @@
-<!doctype html><html><head><meta charset="utf-8" /><title>DragonOnBallZ</title><!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz! 				--><!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com --><!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	--><!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	--><!-- as of ZIM 4.3.0 load createjs namespace first --><script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script><script>var zon = true; // true for comments from zim code</script><script src="https://d309knd7es5f10.cloudfront.net/zim_4.8.0.js"></script><!-- use zimjs.com/code/distill for minified individual functions! --><style>	body {background-color:#000;}</style><script>// SCALING OPTIONS// scaling can have values as follows with full being the default// "fit"		sets canvas and stage to dimensions and scales to fit inside window size// "outside"	sets canvas and stage to dimensions and scales to fit outside window size// "full"		sets stage to window size with no scaling// "tagID"		add canvas to HTML tag of ID - set to dimensions if provided - no scalingvar scaling = "fit"; // fit scales to fit the browser window while keeping the aspect ratiovar width = 768; // can go higher...var height = 1024;var color = "#acd241";var frame = new zim.Frame(scaling, width, height, color); // see docs for more options and infoframe.on("ready", function() {	zog("ready from ZIM Frame");	var stage = frame.stage;	var stageW = frame.width;	var stageH = frame.height;	// put your code here (you can delete this code)var circle = new zim.Circle(100, frame.pink)	.center(stage)	.drag();	stage.update(); // update the stage to see any changes}); // end of ready</script></head><body><!-- canvas with id="myCanvas" is made by zim Frame --></body></html>
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cover</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "rocket.png", "rocket_fire.png", "next.png", "star.png", "starTwo.png", "starThree.png", "star.mp3", "label.mp3", "rocket.mp3"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+        
+		// Remove borderBottom
+//        physics.remove(physics.borderBottom);
+//         physics.remove(physics.borderTop);
+
+        
+		
+		var topBarW = 500;
+        var topBarH = 100;
+        
+        var bottomBarW = 900;
+        var bottomBarH = 100;        
+            
+        //rocket container
+        var rocketW = 345;
+		var rocketH = 500;
+
+        
+        
+        
+        
+
+		// width, height, dynamic, friction, angular, density, restitution, maskBits, categoryBits, linear
+		var topBarBody = physics.makeRectangle(topBarW, topBarH, false);
+        topBarBody.x = 350;
+	    topBarBody.y = 102;
+        topBarBody.rotation = -35;
+        
+        var bottomBarBody = physics.makeRectangle(bottomBarW, bottomBarH, false);
+        bottomBarBody.x = 688;
+	    bottomBarBody.y = 430;
+        bottomBarBody.rotation = -35;
+        
+        var rocketBody = physics.makeRectangle(rocketW, rocketH, true, .2);
+        rocketBody.x = 280;
+        rocketBody.y = 480;
+        rocketBody.rotation = 35;
+        physics.drag([rocketBody]);
+        
+        
+          
+        
+        
+        var topBar = new zim.Rectangle(topBarW, topBarH, "white");
+		topBar.centerReg(stage);
+        topBar.alpha=0;
+        topBar.cursor = "pointer";
+        
+        var bottomBar = new zim.Rectangle(bottomBarW, bottomBarH, "white");
+		bottomBar.centerReg(stage);
+        bottomBar.alpha=0;
+        bottomBar.cursor = "pointer";
+        
+//        var rocket = new zim.Rectangle(rocketW, rocketH, "yellow");
+//		rocket.centerReg(stage);
+//        rocket.alpha=1;
+//        rocket.cursor = "pointer";
+        
+        var rocket = frame.asset("rocket.png");
+        rocket.centerReg(stage);
+        rocket.cursor = "pointer";
+        
+        rocket.on ("click", function() {
+        
+         });
+        
+        
+   
+//    
+//        var rocket = frame.asset("rocket.png");
+//        rocket.centerReg(stage);
+            
+        //add man to physics
+        
+        physics.addMap(topBarBody, topBar);
+        physics.addMap(bottomBarBody, bottomBar);
+        physics.addMap(rocketBody, rocket);
+
+    
+        //can click on a skier to move them
+	        
+		
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+	  
+        var rocketFire=frame.asset("rocket_fire.png");
+        
+        rocket.on("pressmove", function() {
+            
+           if (rocket.hitTestPoint(340, 540)) {
+              if (rocket.alpha == 1) {
+                 frame.asset("rocket.mp3").play();
+                 rocket.alpha=0; 
+                 rocketFire.centerReg(stage);
+                 physics.addMap(rocketBody, rocketFire);
+                 stage.update();
+              }
+           } else {
+              if (rocket.hitTestPoint(340, 540)) {
+                 rocket.alpha = 1;
+                 stage.update();
+              }
+           }
+        });
+        
+        //Title
+        var label = new zim.Label({
+                    text:"Sabrina goes to",
+                    size:37,
+                    font:"HVD Comic Serif Pro",
+                    color:"#F9BF3B",
+                    fontOptions:"bold",
+                    outlineColor:"white",
+                    outlineWidth:2
+                    });
+        
+        stage.addChild(label);
+        label.x = 590;
+        label.y = 425;
+
+        var labelTwo = new zim.Label({
+                       text:"Planet",
+                       size:50,
+                       font:"HVD Comic Serif Pro",
+                       color:"#F89406",
+                       fontOptions:"bold"
+                       });
+        
+        stage.addChild(labelTwo);
+        labelTwo.x = 522;
+        labelTwo.y = label.y+65;
+        
+        labelTwo.on("click", function() {
+            labelTwo.color="#F89406";
+            labelTwo.outlineColor="black";
+        });
+        
+        var labelThree = new zim.Label({
+                       text:"Wonderful",
+                       size:50,
+                       font:"HVD Comic Serif Pro",
+                       color:"#F89406",
+                       fontOptions:"bold"
+                       });
+        
+        stage.addChild(labelThree);
+        labelThree.x = 700;
+        labelThree.y = label.y+65;
+        
+        labelThree.on("click", function() {
+            labelThree.color="#F89406";
+            labelThree.outlineColor="black";
+        });
+
+        
+        var play = new zim.Rectangle(475, 150, "#0d1528");
+        stage.addChild(play);
+        play.x=labelTwo.x;
+        play.y=label.y;
+        play.alpha=.01;
+        play.on("click", function() {
+            frame.asset("label.mp3").play();
+            labelTwo.rotation=10;
+            labelTwo.color="#EC644B";
+            labelThree.rotation=-5;
+            labelThree.color="#19B5FE";
+        });
+
+        
+        
+        
+        
+        var next=frame.asset("next.png");
+        next.centerReg(stage);
+        next.x=960;
+        next.y=700;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("_pages/one/one.html");});
+        
+        
+        
+        var star = frame.asset("star.png");
+        stage.addChild(star);
+        star.centerReg(stage);
+        star.x=100;
+        star.y=200;
+//        star.width=100;
+        star.alpha=1;
+
+        
+        star.on ("click", function() {
+        frame.asset("star.mp3").play();
+        star.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+        var starTwo = frame.asset("starTwo.png");
+        stage.addChild(starTwo);
+        starTwo.centerReg(stage);
+        starTwo.x=800;
+        starTwo.y=200;
+        starTwo.width=50;
+
+        
+        starTwo.on ("click", function() {
+        frame.asset("star.mp3").play();
+        starTwo.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+        var starThree = frame.asset("starThree.png");
+        stage.addChild(starThree);
+        starThree.centerReg(stage);
+        starThree.x=400;
+        starThree.y=100;
+        starThree.width=50;
+
+        
+        starThree.on ("click", function() {
+        frame.asset("star.mp3").play();
+        starThree.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+        
+        
+        
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

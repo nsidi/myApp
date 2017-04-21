@@ -1,0 +1,163 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Three</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "rocket.png", "next.png"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+       
+        redBarW=130;
+        redBarH=50;
+        
+        var topCircle = new zim.Circle(18, "#E90707", "black", 1, 10);
+		topCircle.centerReg(stage);
+        topCircle.alpha=1;
+        topCircle.cursor="pointer";
+        topCircle.x=292;
+        topCircle.y=198;
+        topCircle.on("click", function(){
+            topCircle.color="green";
+        })
+        
+        var bottomCircle = new zim.Circle(18, "#E90707", "black", 1, 10);
+		bottomCircle.centerReg(stage);
+        bottomCircle.alpha=1;
+        bottomCircle.cursor="pointer";
+        bottomCircle.x=292;
+        bottomCircle.y=158;
+        bottomCircle.on("click", function(){
+            bottomCircle.color="green";
+        })
+        
+        
+        
+        var slider = new zim.Slider({min:0, max:360*4, horizontal:true});
+        stage.addChild(slider);
+        slider.currentValue = 270*4;
+        slider.x = 650;
+        slider.y = 542;
+        
+        var dial = new zim.Dial({
+		min:1, max:8, step:1, width:70,
+		color:frame.blue,
+		indicatorColor:"black",
+		tickColor:"frame.blue"
+        });
+        stage.addChild(dial);
+        // zim.place(dial,"dial");
+        dial.x = 525; dial.y = 542;
+        
+        dial.on("change", function() {
+		indicator.selectedIndex = Math.round((dial.currentValue-dial.min)/dial.step);
+		stage.update();
+	});
+        
+        var steps = (dial.max-dial.min)/dial.step+1;
+	var indicator = new zim.Indicator({num:steps, fill:true, offColor:-1, borderColor:"#666"});
+	stage.addChild(indicator);
+	indicator.x = dial.x-400
+	indicator.y = 520;
+	indicator.selectedIndex = 0;
+
+
+        
+        
+        
+       
+        
+        
+        
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+	  
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"Oh no! I don’t see planet Mars! I am so lost. Now what do I do?” she cried. She had forgotten her map.",
+            size:21,
+           lineWidth:760,
+            lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+        
+        
+         var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../four/four.html");});
+        
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../two/two.html");});
+        
+
+       
+
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

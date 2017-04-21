@@ -1,0 +1,229 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page One</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "rocket.png", "rocket_fire.png", "next.png", "rocket.mp3", "blastoff.png", "countdown.png", "blastoff.mp3", "countdown.mp3"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+        
+		// Remove borderBottom
+//        physics.remove(physics.borderBottom);
+//         physics.remove(physics.borderTop);
+
+        
+		
+		var leftBarW = 100;
+        var leftBarH = 500;
+        
+        var rightBarW = 100;
+        var rightBarH = 500;      
+        
+        var bottomBarW = 500;
+        var bottomBarH = 100;  
+            
+        //rocket container
+        var rocketW = 345;
+		var rocketH = 200;
+
+        
+        
+        
+        
+
+		// width, height, dynamic, friction, angular, density, restitution, maskBits, categoryBits, linear
+		var leftBarBody = physics.makeRectangle(leftBarW, leftBarH, false);
+        leftBarBody.x = 300;
+	    leftBarBody.y = 375;
+
+        
+        var rightBarBody = physics.makeRectangle(rightBarW, rightBarH, false);
+        rightBarBody.x = 747;
+	    rightBarBody.y = 410;
+//        bottomBarBody.rotation = -35;
+        
+        var bottomBarBody = physics.makeRectangle(bottomBarW, bottomBarH, false);
+        bottomBarBody.x = 500;
+	    bottomBarBody.y = 600;
+        
+        var rocketBody = physics.makeRectangle(rocketW, rocketH, true, .2);
+        rocketBody.x = 500;
+        rocketBody.y = 350;
+//        rocketBody.rotation = 35;
+        physics.drag([rocketBody]);
+        
+        
+          
+        
+        
+        var leftBar = new zim.Rectangle(leftBarW, leftBarH, "white");
+		leftBar.centerReg(stage);
+        leftBar.alpha=0;
+
+        
+        var rightBar = new zim.Rectangle(rightBarW, rightBarH, "white");
+		rightBar.centerReg(stage);
+        rightBar.alpha=0;
+        
+        var bottomBar = new zim.Rectangle(bottomBarW, bottomBarH, "white");
+		bottomBar.centerReg(stage);
+        bottomBar.alpha=0;
+        
+        
+
+        
+//        var rocket = new zim.Rectangle(rocketW, rocketH, "yellow");
+//		rocket.centerReg(stage);
+//        rocket.alpha=1;
+//        rocket.cursor = "pointer";
+        
+        var rocket = frame.asset("rocket.png");
+        rocket.centerReg(stage);
+        rocket.cursor = "pointer";
+        rocket.height=200;
+        
+   
+//    
+//        var rocket = frame.asset("rocket.png");
+//        rocket.centerReg(stage);
+            
+        //add man to physics
+        
+        physics.addMap(leftBarBody, leftBar);
+        physics.addMap(rightBarBody, rightBar);
+        physics.addMap(bottomBarBody, bottomBar);
+        physics.addMap(rocketBody, rocket);
+
+    
+        //can click on a skier to move them
+	        
+		
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+	  
+        var rocketFire=frame.asset("rocket_fire.png");
+        rocketFire.height=300;
+        
+        rocket.on("pressmove", function() {
+           if (rocket.hitTestPoint(500, 150)) {
+               frame.asset("rocket.mp3").play();
+              if (rocket.alpha == 1) {
+                 rocket.alpha=0 
+                 rocketFire.centerReg(stage);
+                  physics.addMap(rocketBody, rocketFire);
+//                  rocketFire.sca=.5;
+                 stage.update();
+              }
+           } else {
+              if (rocket.alpha == .5) {
+                 rocket.alpha = 1;
+                 stage.update();
+              }
+           }
+        });
+        
+        //Title
+        var label = new zim.Label({
+           text:"Astronaut Sabrina is ready for take-off to planet Mars. Countdown 5-4-3-2-1, BLAST-OFF       Away she goes.",
+           size:21,
+            lineWidth:780,
+            lineHeight:38,
+           font:"Helvetica Neue",
+           color:"black"
+//           fontOptions:"bold"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+//        
+
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../two/two.html");});
+        
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../../index.html");});
+        
+        var countdown=frame.asset("countdown.png");
+        countdown.centerReg(stage);
+        countdown.x=850;
+        countdown.y=644;
+        
+        countdown.on("click", function() {
+            frame.asset("countdown.mp3").play();
+        });
+        
+        var blastoff=frame.asset("blastoff.png");
+        blastoff.centerReg(stage);
+        blastoff.x=228;
+        blastoff.y=684;
+        
+        blastoff.on("click", function() {
+            frame.asset("blastoff.mp3").play();
+
+        });
+
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

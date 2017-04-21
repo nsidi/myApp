@@ -1,0 +1,70 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Ten</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "tada.mp3"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       stage.on("click", function(){
+           frame.asset("tada.mp3").play();
+       })
+        
+        
+        
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../nine/nine.html");});
+        
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../../index.html");});
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

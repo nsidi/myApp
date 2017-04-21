@@ -1,0 +1,147 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Six</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "joyce.png"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+       	var leftBarW = 100;
+        var leftBarH = 700;
+        
+        var rightBarW = 100;
+        var rightBarH = 700;        
+        
+        var bottomBarW = 700;
+        var bottomBarH = 100;    
+            
+        //rocket container
+        var alienW = 425;
+		var alienH = 500;
+
+        
+        
+        
+       
+       	var leftBarBody = physics.makeRectangle(leftBarW, leftBarH, false);
+        leftBarBody.x = 260;
+	    leftBarBody.y = 402;
+//        leftBarBody.rotation=-10;
+  
+        
+        var rightBarBody = physics.makeRectangle(rightBarW, rightBarH, false);
+        rightBarBody.x = 810;
+	    rightBarBody.y = 402;
+        
+         var bottomBarBody = physics.makeRectangle(bottomBarW, bottomBarH, false);
+        bottomBarBody.x = 610;
+	    bottomBarBody.y = 652;
+
+        
+        var alienBody = physics.makeRectangle(alienW, alienH, true, .2);
+        alienBody.x = 580;
+        alienBody.y = 480;
+        alienBody.rotation = 35;
+        physics.drag([alienBody]);
+        
+        
+        var joyce = frame.asset("joyce.png");
+        stage.addChild(joyce);
+        joyce.centerReg(stage);
+       joyce.x=520;
+        joyce.y=350;
+        joyce.alpha=1;
+
+//         physics.addMap(leftBarBody, leftBar);
+//        physics.addMap(bottomBarBody, bottomBar);
+        physics.addMap(alienBody, joyce);
+        
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+//	  
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"She met Joyce, a rather cheerful and adorable alien. “You look so worried! Let me take you to Mrs. Hope. She always makes everything better!” She exclaimed.",
+          size:21,
+           lineWidth:760,
+           lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+        
+         
+         var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../five/five.html");});
+        
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../seven/seven.html");});
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

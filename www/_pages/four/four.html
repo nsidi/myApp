@@ -1,0 +1,218 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Four</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "star.png", "starTwo.png", "starThree.png", "star.mp3", "planetWonderful.png", "newPlanet.png", "music.mp3"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+       
+       
+       
+        
+        
+        
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+	  
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"She noticed Planet Wonderful nearby so she decided to land her space shuttle to ask for help.",
+           size:21,
+           lineWidth:760,
+           lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+
+       
+         var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../five/five.html");});
+        
+        var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../three/three.html");});
+        
+         var star = frame.asset("star.png");
+        stage.addChild(star);
+        star.centerReg(stage);
+        star.x=930;
+        star.y=450;
+//        star.width=100;
+        star.alpha=1;
+
+        
+        star.on ("click", function() {
+        frame.asset("star.mp3").play();
+        star.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+        var starTwo = frame.asset("starTwo.png");
+        stage.addChild(starTwo);
+        starTwo.centerReg(stage);
+        starTwo.x=840;
+        starTwo.y=200;
+        starTwo.width=50;
+
+        
+        starTwo.on ("click", function() {
+        frame.asset("star.mp3").play();
+        starTwo.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+        var starThree = frame.asset("starThree.png");
+        stage.addChild(starThree);
+        starThree.centerReg(stage);
+        starThree.x=150;
+        starThree.y=500;
+        starThree.width=50;
+
+        
+        starThree.on ("click", function() {
+        frame.asset("star.mp3").play();
+        starThree.animate({
+		obj:{rotation:-360, scale:1, alpha: 1},
+        rewind:true,
+        time:1000,
+        from:true
+	       });
+        });
+        
+         var planetW=frame.asset("planetWonderful.png");
+        planetW.centerReg(stage);
+        planetW.x=480;
+        planetW.y=300;
+        var newPlanet;
+        
+        
+        
+        
+        
+//        var musicCircle= new zim.Circle(230, "white");
+//        stage.addChild(musicCircle);
+//        musicCircle.centerReg(stage);
+//        musicCircle.alpha=0.01;
+//        musicCircle.y=310;
+//        musicCircle.x=510;
+//        function music(){
+//            frame.asset("music.mp3").play();
+//        }
+//        
+        function move(){
+            newPlanet.animate({
+            obj:{rotation:-20},
+            loop:true,
+            rewind:true
+        });
+        }
+               
+        planetW.on("click", function(){
+           frame.asset("music.mp3").play();
+            stage.removeChild(planetW);
+            newPlanet=frame.asset("newPlanet.png");
+            stage.addChild(newPlanet);
+            newPlanet.centerReg(stage);
+            newPlanet.x=500;
+            newPlanet.y=300;
+            move();
+          
+           starThree.animate({
+		   obj:{rotation:-360, scale:1, alpha: 1},
+           rewind:true,
+           time:1000,
+           from:true
+	       });
+            
+           starTwo.animate({
+		   obj:{rotation:-360, scale:1, alpha: 1},
+           rewind:true,
+           time:1000,
+           from:true
+	       });
+            
+           star.animate({
+		   obj:{rotation:-360, scale:1, alpha: 1},
+           rewind:true,
+           time:1000,
+           from:true
+	       }); 
+        })
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>

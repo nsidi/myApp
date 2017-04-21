@@ -1,0 +1,374 @@
+<!doctype HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Eight</title>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script>var zon = true; // true for comments from zim code</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.3.1.js"></script>
+
+<!-- physics libraries -->
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="../../_js/physics_0.1.2.js"></script><!-- helper code for box2D -->
+
+
+<script>
+
+var frame = new zim.Frame("fit", 1024, 768, "#231F20");
+frame.on("ready", function() {
+	zog("ready from ZIM Frame");
+
+	var stage = frame.stage;
+	var stageW = frame.width;
+	var stageH = frame.height;
+ 
+    var assetPath = "_assets/";
+	frame.loadAssets(["background.png", "scared.png", "hopeless.png", "mars.png", "worry.png", "wonderful.png"], assetPath);
+	frame.on("complete", function() {
+        
+        // Set background to an image
+        var background = frame.asset("background.png");
+		background.scale(1).centerReg(stage);
+        
+       
+        
+
+		// Borders for the world
+		var borders = {x:0, y:0, width:stageW, height:stageH};
+
+        
+		// New Physics object passing in the ZIM frame and borders
+		var physics = new zim.Physics(frame, borders);
+
+       
+       
+        var leftBarW = 60;
+        var leftBarH = 160;
+        
+        var rightBarW = 120;
+        var rightBarH = 160;        
+        
+        var bottomBarW = 60;
+        var bottomBarH = 160;   
+        
+        var topBarW = 60;
+        var topBarH = 160;   
+        
+        var hopelessBarW = 70;
+        var hopelessBarH = 120;  
+
+
+        var leftBarBody = physics.makeRectangle(leftBarW, leftBarH, false);
+        leftBarBody.x = 150;
+	    leftBarBody.y = 192;
+
+        var rightBarBody = physics.makeRectangle(rightBarW, rightBarH, false);
+        rightBarBody.x = 400;
+	    rightBarBody.y = 192;
+        
+        var bottomBarBody = physics.makeRectangle(bottomBarW, bottomBarH, false);
+        bottomBarBody.x = 260;
+	    bottomBarBody.y = 305;
+        bottomBarBody.rotation=90;
+        
+        var topBarBody = physics.makeRectangle(topBarW, topBarH, false);
+        topBarBody.x = 260;
+	    topBarBody.y = 102;
+        topBarBody.rotation=90;
+        
+        
+        var hopeless = frame.asset("hopeless.png");
+        stage.addChild(hopeless);
+        hopeless.centerReg(stage);
+        hopeless.x=520;
+        hopeless.y=350;
+        hopeless.alpha=1;
+        
+        
+        var hopelessBody = physics.makeCircle(hopelessBarW, hopelessBarH, true, .2);
+        hopelessBody.x = 260;
+	    hopelessBody.y = 102;
+
+        
+        
+        
+//PLANET SCARED
+        
+        var leftBarSW = 20;
+        var leftBarSH = 160;
+        
+        var rightBarSW = 20;
+        var rightBarSH = 160;        
+        
+        var bottomBarSW = 20;
+        var bottomBarSH = 160;   
+        
+        var topBarSW = 20;
+        var topBarSH = 160;   
+        
+        var scaredBarW = 70;
+        var scaredBarH = 160;  
+        
+        var leftBarSBody = physics.makeRectangle(leftBarSW, leftBarSH, false);
+        leftBarSBody.x = 130;
+	    leftBarSBody.y = 292;
+
+        var rightBarSBody = physics.makeRectangle(rightBarSW, rightBarSH, false);
+        rightBarSBody.x = 635;
+	    rightBarSBody.y = 262;
+        
+        var bottomBarSBody = physics.makeRectangle(bottomBarSW, bottomBarSH, false);
+        bottomBarSBody.x = 540;
+	    bottomBarSBody.y = 342;
+        bottomBarSBody.rotation=90;
+        
+        var topBarSBody = physics.makeRectangle(topBarSW, topBarSH, false);
+        topBarSBody.x = 535;
+	    topBarSBody.y = 172;
+        topBarSBody.rotation=90;
+        
+        
+        var scared = frame.asset("scared.png");
+        stage.addChild(scared);
+        scared.centerReg(stage);
+        scared.x=520;
+        scared.y=300;
+        scared.alpha=1;
+        
+        
+        var scaredBody = physics.makeCircle(scaredBarW, scaredBarH, true, .2);
+        scaredBody.x = 520;
+	    scaredBody.y = 302;
+
+        
+//MARS
+        var leftBarMW = 60;
+        var leftBarMH = 160;
+        
+        var rightBarMW = 20;
+        var rightBarMH = 160;        
+        
+        var bottomBarMW = 30;
+        var bottomBarMH = 160;   
+        
+        var topBarMW = 20;
+        var topBarMH = 160;   
+        
+        var marsBarW = 70;
+        var marsBarH = 160;  
+        
+        var leftBarMBody = physics.makeRectangle(leftBarMW, leftBarMH, false);
+        leftBarMBody.x = 680;
+	    leftBarMBody.y = 242;
+
+        var rightBarMBody = physics.makeRectangle(rightBarMW, rightBarMH, false);
+        rightBarMBody.x = 875;
+	    rightBarMBody.y = 262;
+        
+        var bottomBarMBody = physics.makeRectangle(bottomBarMW, bottomBarMH, false);
+        bottomBarMBody.x = 800;
+	    bottomBarMBody.y = 282;
+        bottomBarMBody.rotation=90;
+        
+        var topBarMBody = physics.makeRectangle(topBarMW, topBarMH, false);
+        topBarMBody.x = 835;
+	    topBarMBody.y = 102;
+        topBarMBody.rotation=90;
+        
+        
+        var mars = frame.asset("mars.png");
+        stage.addChild(scared);
+        mars.centerReg(stage);
+        mars.x=800;
+        mars.y=200;
+        mars.alpha=1;
+        
+        
+        var marsBody = physics.makeCircle(marsBarW, marsBarH, true, .2);
+        marsBody.x = 800;
+	    marsBody.y = 202;
+
+        
+        
+//WONDERFUL
+        
+        var leftBarWdlW = 60;
+        var leftBarWdlH = 160;
+        
+        var rightBarWdlW = 20;
+        var rightBarWdlH = 160;        
+        
+        var bottomBarWdlW = 30;
+        var bottomBarWdlH = 160;   
+        
+        var topBarWdlW = 20;
+        var topBarWdlH = 160;   
+        
+        var wdlBarW = 70;
+        var wdlBarH = 160;  
+        
+        var leftBarWdlBody = physics.makeRectangle(leftBarWdlW, leftBarWdlH, false);
+        leftBarWdlBody.x = 150;
+	    leftBarWdlBody.y = 452;
+
+        var rightBarWdlBody = physics.makeRectangle(rightBarWdlW, rightBarWdlH, false);
+        rightBarWdlBody.x = 340;
+	    rightBarWdlBody.y = 452;
+        
+        var bottomBarWdlBody = physics.makeRectangle(bottomBarWdlW, bottomBarWdlH, false);
+        bottomBarWdlBody.x = 240;
+	    bottomBarWdlBody.y = 340;
+        bottomBarWdlBody.rotation=90;
+        
+        var topBarWdlBody = physics.makeRectangle(topBarWdlW, topBarWdlH, false);
+        topBarWdlBody.x = 243;
+	    topBarWdlBody.y = 522;
+        topBarWdlBody.rotation=90;
+        
+        
+        var wdl = frame.asset("wonderful.png");
+        stage.addChild(wdl);
+        wdl.centerReg(stage);
+        wdl.x=180;
+        wdl.y=450;
+        wdl.alpha=1;
+        
+        
+        var wdlBody = physics.makeCircle(wdlBarW, wdlBarH, true, .2);
+        wdlBody.x = 180;
+	    wdlBody.y = 452;
+
+        
+        
+        
+        
+//WORRY
+        var leftBarWorryW = 60;
+        var leftBarWorryH = 160;
+        
+        var rightBarWorryW = 20;
+        var rightBarWorryH = 160;        
+        
+        var bottomBarWorryW = 30;
+        var bottomBarWorryH = 160;   
+        
+        var topBarWorryW = 20;
+        var topBarWorryH = 160;   
+        
+        var worryBarW = 70;
+        var worryBarH = 160;  
+        
+        var leftBarWorryBody = physics.makeRectangle(leftBarWorryW, leftBarWorryH, false);
+        leftBarWorryBody.x = 650;
+	    leftBarWorryBody.y = 452;
+
+        var rightBarWorryBody = physics.makeRectangle(rightBarWorryW, rightBarWorryH, false);
+        rightBarWorryBody.x = 840;
+	    rightBarWorryBody.y = 452;
+        
+        var bottomBarWorryBody = physics.makeRectangle(bottomBarWorryW, bottomBarWorryH, false);
+        bottomBarWorryBody.x = 740;
+	    bottomBarWorryBody.y = 380;
+        bottomBarWorryBody.rotation=90;
+        
+        var topBarWorryBody = physics.makeRectangle(topBarWorryW, topBarWorryH, false);
+        topBarWorryBody.x = 743;
+	    topBarWorryBody.y = 522;
+        topBarWorryBody.rotation=90;
+        
+        
+        var worry = frame.asset("worry.png");
+        stage.addChild(worry);
+        worry.centerReg(stage);
+        worry.x=680;
+        worry.y=450;
+        worry.alpha=1;
+        
+        
+        var worryBody = physics.makeCircle(worryBarW, worryBarH, true, .2);
+        worryBody.x = 680;
+	    worryBody.y = 452;
+        
+        
+        
+        
+        
+        physics.drag([scaredBody, hopelessBody, marsBody, wdlBody, worryBody]);
+
+        physics.addMap(scaredBody, scared);
+        physics.addMap(hopelessBody, hopeless);
+        physics.addMap(marsBody, mars);
+        physics.addMap(wdlBody, wdl);
+        physics.addMap(worryBody, worry);
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//		 FOR DEBUGGING
+//        		 physics.debug();
+//        		 frame.on("resize", function() {
+//        		 physics.updateDebug();
+//        		 });
+//	  
+        
+      
+        //Title
+        var label = new zim.Label({
+           text:"“You want to avoid Planet Hopeless, go around Planet Scared and above Planet Worry. If you remain hopeful, you will reach Mars even faster.” She calmly explained.",
+           size:21,
+           lineWidth:760,
+           lineHeight:35,
+           font:"Helvetica Neue",
+           color:"black"
+        });
+        stage.addChild(label);
+        label.x = 157;
+        label.y = 635;
+        
+        
+         var back=new zim.Rectangle(30, 30, "#F2F2F2");
+        back.centerReg(stage);
+        back.alpha=.01;
+        back.x=15;
+        back.y=752;
+        back.cursor = "pointer";
+        back.addEventListener("click", function(){zgo("../seven/seven.html");});
+        
+        var next=new zim.Rectangle(65, 65, "#F2F2F2");
+        next.centerReg(stage);
+        next.alpha=0.01;
+        next.x=992;
+        next.y=738;
+        next.cursor = "pointer";
+        next.addEventListener("click", function(){zgo("../nine/nine.html");});
+        
+
+     
+        
+
+        
+                
+        stage.update();
+	  });
+		
+})
+	
+
+</script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+
+</head>
+
+<body>
+</body>
+</html>
