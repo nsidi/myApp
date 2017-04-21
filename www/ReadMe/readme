@@ -1,0 +1,24 @@
+<h1>Interactive Storybook</h1> 
+<h2>Overview</h2>
+<p>This is an interactive storybook for all children but targeted for children with mental health challenges.</p> 
+<br>
+<h2>Instructions: Viewing the project on desktop</h2>
+<ol>
+<li>1. To open the file, double-click on the index.html file and open it on a browser. </li>
+<li>2. You can view the next page or the previous by clicking on the page corners at the bottom</li>
+</ol>
+<br>
+<h2>Instructions: How to set up your own interactive storybook/h2>
+For the purpose of this document, I will only cover the basic of how to get started on setting up a page in the storybook. 
+<ol>
+<li>1. Here is the beginning of the code for the cover page of the book. As you can see, I am referencing CreateJS, ZimJS, and the Physics files: Box2D and Physics. I then set up the asset path for the file (i.e. that makes it easier to load all the assets for the file).</li>
+<img src="1.png">
+<li>2. I then set up the background and the elements of the physics world (i.e. the frame and borders).</li>
+<img src="2.png">
+<li>3. I set up a few physics shapes and determine properties for each shape. The word ‘false’ implies that it is static – meaning, it stays in place and does not move. The top and bottom bar bodies are static to keep the rocketBody in place. The rocketBody’s dynamic property is set to ‘true’ and is thus able to move. </li>
+<img src="3.png">
+<li>4. In order to add shape properties to the physics elements, we add shape properties to it using ZimJS and then add it to the physics map. This means that whatever shapes we made above in the physics, we can add shapes inside those Physics elements. Once that is complete, we can add functions to it. For example, in the rocket.on function, we can choose to have it do multiple things. </li>
+<img src="4.png">
+</ol>
+ 
+
